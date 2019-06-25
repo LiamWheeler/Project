@@ -163,8 +163,12 @@ namespace KaleidaProject
 
         private static void EditEmployee()
         {
-            Console.WriteLine("Enter the name of the employee whose detais you wish to edit.");
+            Console.WriteLine("Enter the name of the employee whose details you wish to edit.");
             Console.ReadLine();
+        }
+
+        public static void UpdateEmployee(Employee old) {
+
         }
 
         public static void ListUpcomingAnniversaries()
