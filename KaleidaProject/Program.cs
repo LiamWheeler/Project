@@ -21,16 +21,23 @@ namespace KaleidaProject
 
         private static List<Employee> ProcessCsv(string path)
         {
-            try {
+            try
+            {
                 
                     return File.ReadAllLines(path)
                     .Skip(1)
                     .Select(Employee.ParseFromCsv)
                     .ToList();
                 
-                }catch(Exception ex){
-                    return new List<Employee>();
-                }
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+                Console.ResetColor();
+                return new List<Employee>();
+                    
+            }
         }
 
         private static void MainMenu()
@@ -48,52 +55,64 @@ namespace KaleidaProject
             Console.WriteLine("8. Exit.");
 
             var userInput = Convert.ToInt32(Console.ReadLine().Trim());
+            var AppInUse = true;
+            while (AppInUse)
+            {
+                try
+                {
 
-            if (userInput == 1)
-            {
-                ListEmployees();
-            }
-            else if (userInput == 2)
-            {
-                var employee = ManualAdd();
-                AddEmployeeToCSV(employee);                
-            }
-            else if (userInput == 3)
-            {
-                EditEmployee();
-                MainMenu();
-            }
-            else if (userInput == 4)
-            {
-                RemoveEmployee();
+                    if (userInput == 1)
+                    {
+                        ListEmployees();
+                    }
+                    else if (userInput == 2)
+                    {
+                        var employee = ManualAdd();
+                        AddEmployeeToCSV(employee);
+                    }
+                    else if (userInput == 3)
+                    {
+                        EditEmployee();
+                        MainMenu();
+                    }
+                    else if (userInput == 4)
+                    {
+                        RemoveEmployee();
 
-            }
-            else if (userInput == 5)
-            {
-                ListUpcomingAnniversaries();
+                    }
+                    else if (userInput == 5)
+                    {
+                        ListUpcomingAnniversaries();
 
-            }
-            else if (userInput == 6)
-            {
-                ListAverageAge();
+                    }
+                    else if (userInput == 6)
+                    {
+                        ListAverageAge();
 
-            }
-            else if (userInput == 7)
-            {
-                ListByTown();
+                    }
+                    else if (userInput == 7)
+                    {
+                        ListByTown();
 
+                    }
+                    else if (userInput == 8)
+                    {
+                        Console.WriteLine("Goodbye");
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input, enter a number 1-8.");
+                        Console.ReadLine();
+
+                    }
+                    MainMenu();
+                }
+                catch
+                {
+
+                }
             }
-            else if (userInput == 8)
-            {
-                Console.WriteLine("Goodbye");
-            }
-            else
-            {
-                Console.WriteLine("Invalid input, enter a number 1-8.");
-                Console.ReadLine();
-               
-            }
-            MainMenu();
         }
 
         public static void ListEmployees()
@@ -107,6 +126,8 @@ namespace KaleidaProject
                     $"\r\nHome town: {employee.HomeTown}" +
                     $"\r\nDepartment: {employee.Department}");
             }
+            Console.WriteLine("Press any key to return to the menu...");
+            Console.ReadKey();
         }
 
         private static string GetUserInput(string message){
@@ -151,6 +172,13 @@ namespace KaleidaProject
             file = file.Replace(rowToDelete, "");
             File.WriteAllText(DBPath, file);
         }
+
+
+
+
+
+
+
 
         private static void EditEmployee()
         {
