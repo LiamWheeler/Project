@@ -22,21 +22,18 @@ namespace KaleidaProject
         private static List<Employee> ProcessCsv(string path)
         {
             try
-            {
-                
+            {              
                     return File.ReadAllLines(path)
                     .Skip(1)
                     .Select(Employee.ParseFromCsv)
-                    .ToList();
-                
+                    .ToList();               
             }
             catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(ex.Message);
                 Console.ResetColor();
-                return new List<Employee>();
-                    
+                return new List<Employee>();                   
             }
         }
 
@@ -54,13 +51,14 @@ namespace KaleidaProject
             Console.WriteLine("7. List the number of employees in each town.");
             Console.WriteLine("8. Exit.");
 
-            var userInput = Convert.ToInt32(Console.ReadLine().Trim());
+            var input = Console.ReadLine().Trim();
+            Int32.TryParse(input, out var userInput);
+
             var AppInUse = true;
             while (AppInUse)
             {
                 try
                 {
-
                     if (userInput == 1)
                     {
                         ListEmployees();
@@ -100,18 +98,14 @@ namespace KaleidaProject
                         Console.WriteLine("Goodbye");
                         break;
                     }
-                    else
-                    {
-                        Console.WriteLine("Invalid input, enter a number 1-8.");
-                        Console.ReadLine();
-
-                    }
-                    MainMenu();
+                
+                    else throw new ArgumentNullException();
                 }
-                catch
+                catch(ArgumentNullException)
                 {
-
-                }
+                    Console.WriteLine("Invalid input, enter a number 1-8.");
+                    MainMenu();
+                }            
             }
         }
 
