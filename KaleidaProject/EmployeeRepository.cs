@@ -94,7 +94,7 @@ namespace KaleidaProject
                     else if (userInput == 8)
                     {
                         Console.WriteLine("Goodbye");
-                        break;
+                        AppInUse = false;
                     }
                     else throw new ArgumentNullException();
                 }
@@ -105,6 +105,7 @@ namespace KaleidaProject
                     Console.ResetColor();
                     MainMenu();
                 }
+                break;
             }
         }
 
