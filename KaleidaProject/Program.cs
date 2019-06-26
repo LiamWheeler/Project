@@ -137,11 +137,14 @@ namespace KaleidaProject
         public static Employee ManualAdd() 
         {
             {
-                var employeeId = Convert.ToInt32(GetUserInput("Enter employee id"));
+                var employeeIdInput = GetUserInput("Enter employee id");
+                Int32.TryParse(employeeIdInput, out int employeeId);
                 var firstName = GetUserInput("Enter First Name");
                 var lastName = GetUserInput("Enter Last Name");
-                var dateofBirth = Convert.ToDateTime(GetUserInput("Enter date of birth. (DD/MM/YYYY)"));
-                var startDate = Convert.ToDateTime(GetUserInput("Enter start date. (DD/MM/YYYY)"));
+                var dateofBirthInput = GetUserInput("Enter date of birth. (DD/MM/YYYY)");
+                DateTime.TryParse(dateofBirthInput, out DateTime dateofBirth);
+                var startDateInput = GetUserInput("Enter start date. (DD/MM/YYYY)");
+                DateTime.TryParse(startDateInput, out DateTime startDate);
                 var homeTown = GetUserInput("Enter home town");
                 var department = GetUserInput("Enter department");
 
