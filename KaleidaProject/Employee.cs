@@ -17,7 +17,6 @@ namespace KaleidaProject
         public string HomeTown { get; set; }
         public string Department { get; set; }
 
-
         public Employee()
         {
         }
@@ -36,7 +35,6 @@ namespace KaleidaProject
         internal static Employee ParseFromCsv (string data)
         {
             var columns = data.Split(',');
-
 
             return new Employee()
             {

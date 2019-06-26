@@ -201,12 +201,6 @@ namespace KaleidaProject
             File.WriteAllText(DBPath, file);
         }
 
-
-
-
-
-
-
         public static void ListUpcomingAnniversaries()
         {
             Console.WriteLine("These employees have their anniversary in the next month.");
