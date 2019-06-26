@@ -183,13 +183,39 @@ namespace KaleidaProject
 
         private static void EditEmployee()
         {
-            Console.WriteLine("Enter the name of the employee whose details you wish to edit.");
-            Console.ReadLine();
+            Console.WriteLine("Enter the Id of the Employee whose details you wish to edit.");
+            var input = Console.ReadLine();
+            Int32.TryParse(input, out int Id);
+            var x = Employees.FirstOrDefault(e => e.EmployeeId == Id);
+
+            UpdateEmployee(x);
+            Console.WriteLine($"Employee {Id} has been edited.");
         }
 
-        public static void UpdateEmployee(Employee old) {
+        public static void UpdateEmployee(Employee employee)
+        {
+            var employeeId = Convert.ToInt32(GetUserInput("Enter employee id"));
+            var firstName = GetUserInput("Enter First Name");
+            var lastName = GetUserInput("Enter Last Name");
+            var dateofBirth = Convert.ToDateTime(GetUserInput("Enter date of birth. (DD/MM/YYYY)"));
+            var startDate = Convert.ToDateTime(GetUserInput("Enter start date. (DD/MM/YYYY)"));
+            var homeTown = GetUserInput("Enter home town");
+            var department = GetUserInput("Enter department");
+            var EditedEmployee = $"{employeeId},{firstName},{lastName},{dateofBirth},{startDate},{homeTown},{department}";
+
+            var rowToEdit = $"{employee.EmployeeId},{employee.FirstName}," +
+                    $"{employee.LastName},{employee.DateOfBirth},{employee.StartDate},{employee.HomeTown},{employee.Department}";
+            var file = File.ReadAllText(DBPath);
+            file = file.Replace(rowToEdit, EditedEmployee);
+            File.WriteAllText(DBPath, file);
 
         }
+
+
+
+
+
+
 
         public static void ListUpcomingAnniversaries()
         {
