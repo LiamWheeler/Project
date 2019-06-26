@@ -193,23 +193,16 @@ namespace KaleidaProject
         }
 
         public static void UpdateEmployee(Employee employee)
-        {                     
-                var employeeInput = GetUserInput("Enter employee Id");
-                Int32.TryParse(employeeInput, out int employeeId);
-                var firstName = GetUserInput("Enter First Name");
-                var lastName = GetUserInput("Enter Last Name");
-                var dateofBirthInput = GetUserInput("Enter date of birth. (DD/MM/YYYY)");
-                DateTime.TryParse(dateofBirthInput, out DateTime dateofBirth);
-                var startDateInput = GetUserInput("Enter start date. (DD/MM/YYYY)");
-                DateTime.TryParse(startDateInput, out DateTime startDate);
-                var homeTown = GetUserInput("Enter home town");
-                var department = GetUserInput("Enter department");
-                var EditedEmployee = $"{employeeId},{firstName},{lastName},{dateofBirth},{startDate},{homeTown},{department}";
-            
-            var rowToEdit = $"{employee.EmployeeId},{employee.FirstName}," +
-                    $"{employee.LastName},{employee.DateOfBirth},{employee.StartDate},{employee.HomeTown},{employee.Department}";
+        {
+            var dateofBirthInput = GetUserInput("Enter date of birth. (DD/MM/YYYY)");
+            DateTime.TryParse(dateofBirthInput, out DateTime dateofBirth);
+
+            var NewDOB = $"{dateofBirth}";
+
+            var OldDOB = $"{employee.DateOfBirth}";
             var file = File.ReadAllText(DBPath);
-            file = file.Replace(rowToEdit, EditedEmployee);
+            file = file.Replace(OldDOB, NewDOB);
+
             File.WriteAllText(DBPath, file);
         }
 
