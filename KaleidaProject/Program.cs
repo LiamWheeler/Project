@@ -118,21 +118,11 @@ namespace KaleidaProject
         {
             {
                 var firstName = GetUserInput("Enter First Name");
-
-                Console.WriteLine("Enter Last Name");
-                var lastName = Console.ReadLine();
-
-                Console.WriteLine("Enter date of birth (DD/MM/YYYY)");
-                var dateofBirth = Convert.ToDateTime(Console.ReadLine());
-
-                Console.WriteLine("Enter start date (DD/MM/YYYY)");
-                var startDate = Convert.ToDateTime(Console.ReadLine());
-
-                Console.WriteLine("Enter home town");
-                var homeTown = Console.ReadLine();
-
-                Console.WriteLine("Enter department");
-                var department = Console.ReadLine();
+                var lastName = GetUserInput("Enter Last Name");
+                var dateofBirth = Convert.ToDateTime(GetUserInput("Enter date of birth. (DD/MM/YYYY)"));
+                var startDate = Convert.ToDateTime(GetUserInput("Enter start date. (DD/MM/YYYY)"));
+                var homeTown = GetUserInput("Enter home town");
+                var department = GetUserInput("Enter department");
 
                 return new Employee(firstName, lastName, dateofBirth, startDate, homeTown, department); 
             }
