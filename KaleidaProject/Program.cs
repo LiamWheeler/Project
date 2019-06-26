@@ -10,8 +10,8 @@ namespace KaleidaProject
 {
     static class Program
     {
-        private static string DBPath = ConfigurationManager.AppSettings["CsvDatabasePath"];
-        private static List<Employee> Employees = new List<Employee>();
+        private static readonly string DBPath = ConfigurationManager.AppSettings["CsvDatabasePath"];
+        private static readonly List<Employee> Employees = new List<Employee>();
         private static EmployeeRepository EmployeeRepo = new EmployeeRepository();
       
         static void Main(string[] args)
