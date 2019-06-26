@@ -151,6 +151,7 @@ namespace KaleidaProject
             var x = Employees.FirstOrDefault(e => e.FirstName == name);
 
             RemoveEmployeeFromCSV(x);
+            Console.WriteLine($"{name} has been deleted from the file.");
         }
 
         private static void RemoveEmployeeFromCSV(Employee employee)
