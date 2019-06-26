@@ -107,7 +107,9 @@ namespace KaleidaProject
                 }
                 catch(ArgumentNullException)
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Invalid input, enter a number 1-8.");
+                    Console.ResetColor();
                     MainMenu();
                 }    
             }
