@@ -231,7 +231,6 @@ namespace KaleidaProject
 
         public static void ListByTown(List<Employee> homeList)
         {
-            Console.WriteLine("Here is the number of employees from each town.");
             var homeTownList = homeList.GroupBy(e => e.HomeTown)
                 .OrderBy(e => e.Key)
                 .Select( e => new
@@ -240,7 +239,7 @@ namespace KaleidaProject
 
             foreach (var employee in homeTownList)
             {
-                Console.WriteLine($"{employee.HomeTown}: {employee.numberOfEmployees}");
+                Console.WriteLine($"The number of employees whose home town is {employee.HomeTown} are {employee.numberOfEmployees}.");
             }
             Console.ReadKey();
         }
