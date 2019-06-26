@@ -13,6 +13,7 @@ namespace KaleidaProject
         private static string DBPath = ConfigurationManager.AppSettings["CsvDatabasePath"];
         private static List<Employee> Employees = new List<Employee>();
 
+
         static void Main(string[] args)
         {
             MainMenu();
@@ -25,6 +26,7 @@ namespace KaleidaProject
             {              
                     return File.ReadAllLines(path)
                     .Skip(1)
+                    .Where(l => l.Count() > 6)
                     .Select(Employee.ParseFromCsv)
                     .ToList();               
             }
@@ -93,7 +95,7 @@ namespace KaleidaProject
                     }
                     else if (userInput == 7)
                     {
-                        ListByTown();
+                        ListByTown(Employees);
                         MainMenu();
                     }
                     else if (userInput == 8)
@@ -174,13 +176,6 @@ namespace KaleidaProject
             File.WriteAllText(DBPath, file);
         }
 
-
-
-
-
-
-
-
         private static void EditEmployee()
         {
             Console.WriteLine("Enter the Id of the Employee whose details you wish to edit.");
@@ -193,22 +188,24 @@ namespace KaleidaProject
         }
 
         public static void UpdateEmployee(Employee employee)
-        {
-            var employeeId = Convert.ToInt32(GetUserInput("Enter employee id"));
-            var firstName = GetUserInput("Enter First Name");
-            var lastName = GetUserInput("Enter Last Name");
-            var dateofBirth = Convert.ToDateTime(GetUserInput("Enter date of birth. (DD/MM/YYYY)"));
-            var startDate = Convert.ToDateTime(GetUserInput("Enter start date. (DD/MM/YYYY)"));
-            var homeTown = GetUserInput("Enter home town");
-            var department = GetUserInput("Enter department");
-            var EditedEmployee = $"{employeeId},{firstName},{lastName},{dateofBirth},{startDate},{homeTown},{department}";
-
+        {                     
+                var employeeInput = GetUserInput("Enter employee Id");
+                Int32.TryParse(employeeInput, out int employeeId);
+                var firstName = GetUserInput("Enter First Name");
+                var lastName = GetUserInput("Enter Last Name");
+                var dateofBirthInput = GetUserInput("Enter date of birth. (DD/MM/YYYY)");
+                DateTime.TryParse(dateofBirthInput, out DateTime dateofBirth);
+                var startDateInput = GetUserInput("Enter start date. (DD/MM/YYYY)");
+                DateTime.TryParse(startDateInput, out DateTime startDate);
+                var homeTown = GetUserInput("Enter home town");
+                var department = GetUserInput("Enter department");
+                var EditedEmployee = $"{employeeId},{firstName},{lastName},{dateofBirth},{startDate},{homeTown},{department}";
+            
             var rowToEdit = $"{employee.EmployeeId},{employee.FirstName}," +
                     $"{employee.LastName},{employee.DateOfBirth},{employee.StartDate},{employee.HomeTown},{employee.Department}";
             var file = File.ReadAllText(DBPath);
             file = file.Replace(rowToEdit, EditedEmployee);
             File.WriteAllText(DBPath, file);
-
         }
 
 
@@ -229,9 +226,19 @@ namespace KaleidaProject
             Console.ReadLine();
         }
 
-        public static void ListByTown()
+        public static void ListByTown(List<Employee> homeList)
         {
-            Console.WriteLine("Here are the employees arranged by home town.");
+            Console.WriteLine("Here is the number of employees from each town.");
+            var homeTownList = homeList.GroupBy(e => e.HomeTown)
+                .OrderBy(e => e.Key)
+                .Select( e => new
+                { HomeTown = e.Key,
+                numberOfEmployees = e.Count()});
+
+            foreach (var employee in homeTownList)
+            {
+                Console.WriteLine($"{employee.HomeTown}: {employee.numberOfEmployees}");
+            }
             Console.ReadKey();
         }
     }
