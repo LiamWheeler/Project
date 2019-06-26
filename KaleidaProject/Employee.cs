@@ -9,6 +9,7 @@ namespace KaleidaProject
 {
     public class Employee
     {
+        public int EmployeeId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
@@ -21,8 +22,9 @@ namespace KaleidaProject
         {
         }
 
-        public Employee(string firstName, string lastName, DateTime dateofBirth, DateTime startDate, string homeTown, string department)
+        public Employee(int employeeId, string firstName, string lastName, DateTime dateofBirth, DateTime startDate, string homeTown, string department)
         {
+            this.EmployeeId = employeeId;
             this.FirstName = firstName;
             this.LastName = lastName;
             this.DateOfBirth = dateofBirth;
@@ -38,12 +40,13 @@ namespace KaleidaProject
 
             return new Employee()
             {
-                FirstName = columns[0],
-                LastName = columns[1],
-                DateOfBirth = DateTime.Parse(columns[2]),
-                StartDate = DateTime.Parse(columns[3]),
-                HomeTown = columns[4],
-                Department = columns[5]
+                EmployeeId = int.Parse(columns[0]),
+                FirstName = columns[1],
+                LastName = columns[2],
+                DateOfBirth = DateTime.Parse(columns[3]),
+                StartDate = DateTime.Parse(columns[4]),
+                HomeTown = columns[5],
+                Department = columns[6]
             };
 
         }

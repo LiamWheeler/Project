@@ -59,14 +59,17 @@ namespace KaleidaProject
             {
                 try
                 {
+
                     if (userInput == 1)
                     {
                         ListEmployees();
+                        MainMenu();
                     }
                     else if (userInput == 2)
                     {
                         var employee = ManualAdd();
                         AddEmployeeToCSV(employee);
+                        MainMenu();
                     }
                     else if (userInput == 3)
                     {
@@ -76,36 +79,35 @@ namespace KaleidaProject
                     else if (userInput == 4)
                     {
                         RemoveEmployee();
-
+                        MainMenu();
                     }
                     else if (userInput == 5)
                     {
                         ListUpcomingAnniversaries();
-
+                        MainMenu();
                     }
                     else if (userInput == 6)
                     {
                         ListAverageAge();
-
+                        MainMenu();
                     }
                     else if (userInput == 7)
                     {
                         ListByTown();
-
+                        MainMenu();
                     }
                     else if (userInput == 8)
                     {
                         Console.WriteLine("Goodbye");
                         break;
-                    }
-                
+                    }                                    
                     else throw new ArgumentNullException();
                 }
                 catch(ArgumentNullException)
                 {
                     Console.WriteLine("Invalid input, enter a number 1-8.");
                     MainMenu();
-                }            
+                }    
             }
         }
 
@@ -114,7 +116,8 @@ namespace KaleidaProject
             var employeeData = ProcessCsv(DBPath);
             foreach (var employee in employeeData)
             {
-                Console.WriteLine($"\r\nName: {employee.FirstName} {employee.LastName} " +
+                Console.WriteLine($"\r\nId: {employee.EmployeeId}" +
+                    $"\r\nName: {employee.FirstName} {employee.LastName} " +
                     $"\r\nDate of birth: {employee.DateOfBirth.ToShortDateString()}" +
                     $"\r\nEmployment start date: {employee.StartDate.Date.ToShortDateString()}" +
                     $"\r\nHome town: {employee.HomeTown}" +
@@ -132,6 +135,7 @@ namespace KaleidaProject
         public static Employee ManualAdd() 
         {
             {
+                var employeeId = Convert.ToInt32(GetUserInput("Enter employee id"));
                 var firstName = GetUserInput("Enter First Name");
                 var lastName = GetUserInput("Enter Last Name");
                 var dateofBirth = Convert.ToDateTime(GetUserInput("Enter date of birth. (DD/MM/YYYY)"));
@@ -139,29 +143,32 @@ namespace KaleidaProject
                 var homeTown = GetUserInput("Enter home town");
                 var department = GetUserInput("Enter department");
 
-                return new Employee(firstName, lastName, dateofBirth, startDate, homeTown, department); 
+                return new Employee(employeeId, firstName, lastName, dateofBirth, startDate, homeTown, department); 
             }
         }
 
         private static void AddEmployeeToCSV(Employee employee)
         {
-            var row = $"{Environment.NewLine}{employee.FirstName},{employee.LastName},{employee.DateOfBirth},{employee.StartDate},{employee.HomeTown},{employee.Department}";
+            var row = $"{Environment.NewLine}{employee.EmployeeId},{employee.FirstName}," +
+                        $"{employee.LastName},{employee.DateOfBirth},{employee.StartDate},{employee.HomeTown},{employee.Department}";
             File.AppendAllText(DBPath, row);    
         }
 
         private static void RemoveEmployee()
         {
-            Console.WriteLine("Enter the name of the Employee you wish to remove.");
-            var name = Console.ReadLine();
-            var x = Employees.FirstOrDefault(e => e.FirstName == name);
+            Console.WriteLine("Enter the Id of the Employee you wish to remove.");
+            var input = Console.ReadLine();
+            Int32.TryParse(input, out int Id);
+            var x = Employees.FirstOrDefault(e => e.EmployeeId == Id);
 
             RemoveEmployeeFromCSV(x);
-            Console.WriteLine($"{name} has been deleted from the file.");
+            Console.WriteLine($"Employee {Id} has been deleted from the file.");
         }
 
         private static void RemoveEmployeeFromCSV(Employee employee)
         {
-            var rowToDelete = $"{Environment.NewLine}{employee.FirstName},{employee.LastName},{employee.DateOfBirth},{employee.StartDate},{employee.HomeTown},{employee.Department}";
+            var rowToDelete = $"{Environment.NewLine}{employee.EmployeeId},{employee.FirstName}," +
+                                $"{employee.LastName},{employee.DateOfBirth},{employee.StartDate},{employee.HomeTown},{employee.Department}";
             var file = File.ReadAllText(DBPath);   
             file = file.Replace(rowToDelete, "");
             File.WriteAllText(DBPath, file);
