@@ -13,14 +13,11 @@ namespace KaleidaProject
         private static string DBPath = ConfigurationManager.AppSettings["CsvDatabasePath"];
         private static List<Employee> Employees = new List<Employee>();
         private static EmployeeRepository EmployeeRepo = new EmployeeRepository();
-
-        
-
+      
         static void Main(string[] args)
         {
             EmployeeRepo.MainMenu();
-            Console.ReadKey();
-            
+            Console.ReadKey();          
         }
     }
 }
