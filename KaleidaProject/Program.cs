@@ -66,7 +66,7 @@ namespace KaleidaProject
                     }
                     else if (userInput == 5)
                     {
-                        ListUpcomingAnniversaries();
+                        ListUpcomingAnniversaries(Employees);
                         MainMenu();
                     }
                     else if (userInput == 6)
@@ -131,7 +131,7 @@ namespace KaleidaProject
                 var startDateInput = GetUserInput("Enter start date. (DD/MM/YYYY)");
                 DateTime.TryParse(startDateInput, out DateTime startDate);
                 var homeTown = GetUserInput("Enter home town");
-                var department = GetUserInput("Enter department");
+                var department = GetUserInput("Enter department"); 
 
                 return new Employee(employeeId, firstName, lastName, dateofBirth, startDate, homeTown, department);
             }
@@ -160,9 +160,33 @@ namespace KaleidaProject
             Console.WriteLine($"Employee {Id} has been edited.");
         }
 
-        public static void ListUpcomingAnniversaries()
+        public static void ListUpcomingAnniversaries(List<Employee> anniversaries)
         {
+            Employees = EmployeeRepo.ProcessCsv(DBPath);
             Console.WriteLine("These employees have their anniversary in the next month.");
+            var UpcomingAnniversaries = anniversaries.OrderBy(e => e.FirstName)
+                                                     .Select(e => new
+                                                     {
+                                                         firstName = e.FirstName,
+                                                         lastName = e.LastName,
+                                                         Anniversary = e.StartDate,
+                                                         Score = e.Anniversary,
+                                                         Days = e.DaysTillAnniversary
+                                                     })
+                                                     .Where(e => e.Score == true);
+            foreach (var employee in UpcomingAnniversaries)
+            {
+                if (employee.Days == 0)
+                {
+                    Console.WriteLine($"{employee.firstName} {employee.lastName} has their anniversary on {employee.Anniversary.ToShortDateString()} - Today.");
+                }
+                else if (employee.Days == 1)
+                {
+                    Console.WriteLine($"{employee.firstName} {employee.lastName} has their anniversary on {employee.Anniversary.ToShortDateString()} - Tomorrow.");
+                }
+                else
+                    Console.WriteLine($"{employee.firstName} {employee.lastName} has their anniversary on {employee.Anniversary.ToShortDateString()} in {employee.Days} days time.");
+            }
             Console.ReadLine();
         }
 

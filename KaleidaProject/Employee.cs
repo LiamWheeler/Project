@@ -26,6 +26,26 @@ namespace KaleidaProject
                     return age;
             }
         }
+        public bool Anniversary { get
+            {
+                bool anniversary = false;
+                if (StartDate.DayOfYear <= DateTime.Now.DayOfYear + 28 && StartDate.DayOfYear >= DateTime.Now.DayOfYear)
+                {
+                    anniversary = true;
+                }
+                return anniversary;
+            } }
+
+        public int DaysTillAnniversary { get
+            {
+                var daysTillAnn = 0;
+                if(DateTime.Now.DayOfYear > StartDate.DayOfYear)
+                {
+                    daysTillAnn = 365 - (DateTime.Now.DayOfYear - StartDate.DayOfYear);
+                }
+                else daysTillAnn = StartDate.DayOfYear - DateTime.Now.DayOfYear;
+                return daysTillAnn;
+            } }
 
         public Employee()
         {
