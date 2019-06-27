@@ -16,7 +16,7 @@ namespace KaleidaProject
         public DateTime StartDate { get; set; }
         public string HomeTown { get; set; }
         public string Department { get; set; }
-        public int Age { get
+        public float Age { get
             {
                 int age = DateTime.Now.Year - DateOfBirth.Year;
                 if (DateOfBirth.DayOfYear > DateTime.Now.DayOfYear)
