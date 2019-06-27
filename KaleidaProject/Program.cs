@@ -196,13 +196,14 @@ namespace KaleidaProject
             Employees = EmployeeRepo.ProcessCsv(DBPath);
             Console.WriteLine("These are the average ages of the employees in each department:");
             var AgeByDepartment = averageAge.GroupBy(e => e.Department)
-                                            .OrderBy(e => e.Key)
+                                            
                                             .Select(e => new
                                             {
                                                 Department = e.Key,
                                                 TotalAge = e.Sum(x => x.Age),
                                                 EmployeesInDepartment = e.Count()
-                                            });
+                                            })
+                                            .OrderBy(e => e.TotalAge/e.EmployeesInDepartment);
 
             foreach (var employee in AgeByDepartment)
             {
