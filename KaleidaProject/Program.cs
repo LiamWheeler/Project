@@ -164,7 +164,7 @@ namespace KaleidaProject
         {
             Employees = EmployeeRepo.ProcessCsv(DBPath);
             Console.WriteLine("These employees have their anniversary in the next month.");
-            var UpcomingAnniversaries = anniversaries.OrderBy(e => e.FirstName)
+            var UpcomingAnniversaries = anniversaries
                                                      .Select(e => new
                                                      {
                                                          firstName = e.FirstName,
@@ -173,7 +173,8 @@ namespace KaleidaProject
                                                          Score = e.Anniversary,
                                                          Days = e.DaysTillAnniversary
                                                      })
-                                                     .Where(e => e.Score == true);
+                                                     .Where(e => e.Score == true)
+                                                     .OrderBy(e => e.Days);
             foreach (var employee in UpcomingAnniversaries)
             {
                 if (employee.Days == 0)
