@@ -62,7 +62,7 @@ namespace KaleidaProject
             this.Department = department;
         }
 
-        internal static Employee ParseFromCsv (string data)
+        internal static Employee ParseData (string data)
         {
             var columns = data.Split(',');
 

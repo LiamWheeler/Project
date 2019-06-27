@@ -22,7 +22,7 @@ namespace KaleidaProject
 
         public static void MainMenu()
         {
-            Employees = EmployeeRepo.ProcessCsv(DBPath);
+            Employees = EmployeeRepo.ProcessData(DBPath);
 
             Console.WriteLine("\r\nOptions:");
             Console.WriteLine("1. List all employees.");
@@ -51,7 +51,7 @@ namespace KaleidaProject
                     else if (userInput == 2)
                     {
                         var employee = ManualAdd();
-                        EmployeeRepo.AddEmployeeToCSV(employee);
+                        EmployeeRepo.AddEmployee(employee);
                         MainMenu();
                     }
                     else if (userInput == 3)
@@ -105,7 +105,7 @@ namespace KaleidaProject
 
         public static void ListEmployees()
         {
-            var employeeData = EmployeeRepo.ProcessCsv(DBPath);
+            var employeeData = EmployeeRepo.ProcessData(DBPath);
             foreach (var employee in employeeData)
             {
                 Console.WriteLine($"\r\nId: {employee.EmployeeId}" +
@@ -144,7 +144,7 @@ namespace KaleidaProject
             Int32.TryParse(input, out int Id);
             var x = Employees.FirstOrDefault(e => e.EmployeeId == Id);
 
-            EmployeeRepo.RemoveEmployeeFromCSV(x);
+            EmployeeRepo.RemoveEmployeeFromData(x);
             Console.WriteLine($"Employee {Id} has been deleted from the file.");
         }
 
@@ -162,7 +162,7 @@ namespace KaleidaProject
 
         public static void ListUpcomingAnniversaries(List<Employee> anniversaries)
         {
-            Employees = EmployeeRepo.ProcessCsv(DBPath);
+
             Console.WriteLine("These employees have their anniversary in the next month.");
             var UpcomingAnniversaries = anniversaries
                                                      .Select(e => new
@@ -194,7 +194,7 @@ namespace KaleidaProject
 
         public static void ListAverageAge(List<Employee> averageAge)
         {
-            Employees = EmployeeRepo.ProcessCsv(DBPath);
+
             Console.WriteLine("These are the average ages of the employees in each department:");
             var AgeByDepartment = averageAge.GroupBy(e => e.Department)
                                             

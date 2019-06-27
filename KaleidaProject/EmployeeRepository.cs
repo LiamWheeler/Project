@@ -13,14 +13,14 @@ namespace KaleidaProject
         private static readonly string DBPath = ConfigurationManager.AppSettings["CsvDatabasePath"];
         private static readonly List<Employee> Employees = new List<Employee>();
 
-        public  List<Employee> ProcessCsv(string path)
+        public  List<Employee> ProcessData(string path)
         {
             try
             {
                 return File.ReadAllLines(path)
                 .Skip(1)
                 .Where(l => l.Count() > 6)
-                .Select(Employee.ParseFromCsv)
+                .Select(Employee.ParseData)
                 .ToList();
             }
             catch (Exception ex)
@@ -32,14 +32,14 @@ namespace KaleidaProject
             }
         }
 
-        public void AddEmployeeToCSV(Employee employee)
+        public void AddEmployee(Employee employee)
         {
             var row = $"{Environment.NewLine}{employee.EmployeeId},{employee.FirstName}," +
                         $"{employee.LastName},{employee.DateOfBirth.ToShortDateString()},{employee.StartDate.ToShortDateString()},{employee.HomeTown},{employee.Department}";
             File.AppendAllText(DBPath, row);
         }
 
-        public void RemoveEmployeeFromCSV(Employee employee)
+        public void RemoveEmployeeFromData(Employee employee)
         {
             var rowToDelete = $"{Environment.NewLine}{employee.EmployeeId},{employee.FirstName}," +
                                 $"{employee.LastName},{employee.DateOfBirth},{employee.StartDate},{employee.HomeTown},{employee.Department}";
