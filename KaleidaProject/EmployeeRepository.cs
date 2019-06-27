@@ -35,7 +35,7 @@ namespace KaleidaProject
         public void AddEmployeeToCSV(Employee employee)
         {
             var row = $"{Environment.NewLine}{employee.EmployeeId},{employee.FirstName}," +
-                        $"{employee.LastName},{employee.DateOfBirth},{employee.StartDate},{employee.HomeTown},{employee.Department}";
+                        $"{employee.LastName},{employee.DateOfBirth.ToShortDateString()},{employee.StartDate.ToShortDateString()},{employee.HomeTown},{employee.Department}";
             File.AppendAllText(DBPath, row);
         }
 
