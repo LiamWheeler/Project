@@ -169,8 +169,13 @@ namespace KaleidaProject
 
         public static void ListAverageAge(List<Employee> averageAge)
         {
+            Employees = EmployeeRepo.ProcessCsv(DBPath);
             Console.WriteLine("These are the average ages of the employees in each department");
 
+            foreach (var employee in Employees)
+            {
+                Console.WriteLine($"{employee.FirstName}: {employee.Age}");
+            }
             Console.ReadKey();
         }
 

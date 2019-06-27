@@ -18,11 +18,12 @@ namespace KaleidaProject
         public string Department { get; set; }
         public int Age { get
             {
-               int age = DateTime.Now.Year - DateOfBirth.Year;
-                if ( DateOfBirth.Month < DateTime.Now.Month && DateOfBirth.Day < DateTime.Now.Day)
+                int age = 0;
+                age= DateTime.Now.Year - DateOfBirth.Year;
+                if (DateOfBirth.DayOfYear > DateTime.Now.DayOfYear)
                 {
-                    age = age - 1;
-                }
+                        age = age - 1;
+                }           
                     return age;
             }
         }
