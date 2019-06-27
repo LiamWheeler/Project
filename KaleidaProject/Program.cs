@@ -184,6 +184,7 @@ namespace KaleidaProject
             {
                 Console.WriteLine($"\n{employee.Department} department:\n{(employee.TotalAge/employee.EmployeesInDepartment).ToString("n2")} years");
             }
+            Console.WriteLine("Press any key to return to the menu...");
             Console.ReadKey();
         }
 
@@ -201,6 +202,7 @@ namespace KaleidaProject
             {
                 Console.WriteLine($"The number of employees whose home town is {employee.HomeTown} are {employee.numberOfEmployees}.");
             }
+            Console.WriteLine("Press any key to return to the menu...");
             Console.ReadKey();
         }
     }
