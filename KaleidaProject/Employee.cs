@@ -16,6 +16,16 @@ namespace KaleidaProject
         public DateTime StartDate { get; set; }
         public string HomeTown { get; set; }
         public string Department { get; set; }
+        public int Age { get
+            {
+               int age = DateTime.Now.Year - DateOfBirth.Year;
+                if ( DateOfBirth.Month < DateTime.Now.Month && DateOfBirth.Day < DateTime.Now.Day)
+                {
+                    age = age - 1;
+                }
+                    return age;
+            }
+        }
 
         public Employee()
         {

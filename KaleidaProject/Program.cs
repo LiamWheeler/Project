@@ -156,6 +156,7 @@ namespace KaleidaProject
             var x = Employees.FirstOrDefault(e => e.EmployeeId == Id);
 
             EmployeeRepo.UpdateEmployee(x);
+
             Console.WriteLine($"Employee {Id} has been edited.");
         }
 
