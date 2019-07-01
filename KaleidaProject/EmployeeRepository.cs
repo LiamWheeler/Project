@@ -10,8 +10,8 @@ namespace KaleidaProject
 {
     public class EmployeeRepository
     {
-        private static readonly string DBPath = ConfigurationManager.AppSettings["CsvDatabasePath"];
-        private static readonly List<Employee> Employees = new List<Employee>();
+        private static  string DBPath = ConfigurationManager.AppSettings["CsvDatabasePath"];
+        private static  List<Employee> Employees = new List<Employee>();
 
         public  List<Employee> ProcessData(string path)
         {
@@ -42,7 +42,7 @@ namespace KaleidaProject
         public void RemoveEmployeeFromData(Employee employee)
         {
             var rowToDelete = $"{Environment.NewLine}{employee.EmployeeId},{employee.FirstName}," +
-                                $"{employee.LastName},{employee.DateOfBirth},{employee.StartDate},{employee.HomeTown},{employee.Department}";
+                                $"{employee.LastName},{employee.DateOfBirth.ToShortDateString()},{employee.StartDate.ToShortDateString()},{employee.HomeTown},{employee.Department}";
             var file = File.ReadAllText(DBPath);
             file = file.Replace(rowToDelete, "");
             File.WriteAllText(DBPath, file);
@@ -59,9 +59,9 @@ namespace KaleidaProject
             var dateofBirthInput = GetUserInput("Enter date of birth. (DD/MM/YYYY)");
             DateTime.TryParse(dateofBirthInput, out DateTime dateofBirth);
 
-            var NewDOB = $"{dateofBirth}";
+            var NewDOB = $"{dateofBirth.ToShortDateString()}";
 
-            var OldDOB = $"{employee.DateOfBirth}";
+            var OldDOB = $"{employee.DateOfBirth.ToShortDateString()}";
             var file = File.ReadAllText(DBPath);
             file = file.Replace(OldDOB, NewDOB);
 

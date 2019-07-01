@@ -214,7 +214,7 @@ namespace KaleidaProject
             Console.ReadKey();
         }
 
-        public static void ListByTown(List<Employee> homeList)
+        public static void ListByTown(List<Employee> homeList) 
         {
             var homeTownList = homeList.GroupBy(e => e.HomeTown)
                 .OrderBy(e => e.Key)
