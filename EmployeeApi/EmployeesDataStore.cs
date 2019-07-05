@@ -13,7 +13,7 @@ namespace KaleidaProject
     {
         public static EmployeeDataStore Current { get; } = new EmployeeDataStore();
         private static string DBPath = ConfigurationManager.AppSettings["CsvDatabasePath"];
-        public static List<EmployeeDto> Employees { get; set; }
+        public  List<EmployeeDto> Employees { get; set; }
 
         public List<Employee> ProcessData(string path)
         {

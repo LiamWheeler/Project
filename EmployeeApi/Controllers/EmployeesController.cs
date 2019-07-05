@@ -15,10 +15,10 @@ namespace EmployeeApi.Controllers
     {
 
         // GET api/values
-        [HttpGet]
-        public List<Employee> GetEmployees(string anyString)
+        [HttpGet()]
+        public List<Employee> GetEmployees(string path)
         {
-            return EmployeeDataStore.Current.ProcessData(anyString);
+            return EmployeeDataStore.Current.ProcessData(path);
         }
 
         //// GET api/values/5
