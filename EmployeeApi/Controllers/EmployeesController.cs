@@ -60,7 +60,7 @@ namespace EmployeeApi.Controllers
         //Get api/employees/averageagebydepartment
         public List<string> ListAverageAge()
         {
-            List<string> DepartmentAges = new List<string>();
+            List<string> departmentAges = new List<string>();
             var Employees = _dataStore.ProcessData(DBPath);
 
             var AgeByDepartment = Employees.GroupBy(e => e.Department)
@@ -74,9 +74,9 @@ namespace EmployeeApi.Controllers
 
             foreach (var employee in AgeByDepartment)
             {
-                DepartmentAges.Add((employee.TotalAge/employee.EmployeesInDepartment).ToString());
+                departmentAges.Add((employee.TotalAge / employee.EmployeesInDepartment).ToString()); 
             }
-            return DepartmentAges;
+            return departmentAges;
         }
 
 
