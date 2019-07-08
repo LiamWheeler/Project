@@ -27,7 +27,7 @@ namespace EmployeeApi.Controllers
         }
 
         //// GET api/values/5
-        public IEnumerable<Employee> Get(int id)
+        public IEnumerable<Employee> GetEmployee(int id)
         {
             return _dataStore.ProcessData(DBPath).Where(e => e.EmployeeId == id);
         }
