@@ -13,20 +13,21 @@ using System.Web.Http;
 
 namespace EmployeeApi.Controllers
 {
-        [Route("api/employees")]
+
     public class EmployeesController : ApiController
     {
         private static EmployeeDataStore _dataStore = new EmployeeDataStore();
         List<Employee> employeeList = new List<Employee>();
         private static readonly string DBPath = ConfigurationManager.AppSettings["CsvDatabasePath"];
 
+        [Route("api/employees")]
         // GET api/employees
         public List<Employee> GetEmployees()
         {
             return _dataStore.ProcessData(DBPath);           
         }
 
-        [HttpGet()]
+       [Route("api/employees/{id}")]
         // GET api/employees/id
         public IEnumerable<Employee> GetEmployee(int id)
         {
@@ -53,6 +54,29 @@ namespace EmployeeApi.Controllers
             }
 
             return employeesByTown;
+        }
+
+        [Route("api/employees/ages")]
+        //Get api/employees/averageagebydepartment
+        public List<string> ListAverageAge()
+        {
+            List<string> DepartmentAges = new List<string>();
+            var Employees = _dataStore.ProcessData(DBPath);
+
+            var AgeByDepartment = Employees.GroupBy(e => e.Department)
+                                            .OrderBy(e => e.Key)
+                                            .Select(e => new
+                                            {
+                                                Department = e.Key,
+                                                TotalAge = e.Sum(x => x.Age),
+                                                EmployeesInDepartment = e.Count()
+                                            });
+
+            foreach (var employee in AgeByDepartment)
+            {
+                DepartmentAges.Add((employee.TotalAge/employee.EmployeesInDepartment).ToString());
+            }
+            return DepartmentAges;
         }
 
 
