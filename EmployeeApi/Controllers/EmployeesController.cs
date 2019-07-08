@@ -33,9 +33,10 @@ namespace EmployeeApi.Controllers
         }
 
         //// POST api/values
-        //public void Post([FromBody]string value)
-        //{
-        //}
+        public IEnumerable Post( [FromBody]string value)
+        {
+            return value;
+        }
 
         //// PUT api/values/5
         //public void Put(int id, [FromBody]string value)
