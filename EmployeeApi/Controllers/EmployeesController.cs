@@ -57,8 +57,9 @@ namespace EmployeeApi.Controllers
         }
 
         [Route("api/employees/ages")]
+        //[HttpGet]
         //Get api/employees/averageagebydepartment
-        public List<string> ListAverageAge()
+        public List<string> GetListAverageAge()
         {
             List<string> departmentAges = new List<string>();
             var Employees = _dataStore.ProcessData(DBPath);
@@ -74,7 +75,7 @@ namespace EmployeeApi.Controllers
 
             foreach (var employee in AgeByDepartment)
             {
-                departmentAges.Add((employee.TotalAge / employee.EmployeesInDepartment).ToString()); 
+                departmentAges.Add(employee.ToString());
             }
             return departmentAges;
         }
