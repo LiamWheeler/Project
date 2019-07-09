@@ -21,6 +21,7 @@ namespace EmployeeApi.Controllers
         List<Employee> employees = _dataStore.ProcessData(DBPath);
 
         [Route("api/employees")]
+        [HttpGet]
         // GET api/employees
         public List<Employee> GetEmployees()
         {
@@ -28,6 +29,7 @@ namespace EmployeeApi.Controllers
         }
 
        [Route("api/employees/{id}")]
+       [HttpGet]
         // GET api/employees/id
         public IEnumerable<Employee> GetEmployee(int id)
         {
@@ -69,6 +71,7 @@ namespace EmployeeApi.Controllers
         }
 
         [Route("api/employees/towns")]
+        [HttpGet]
         // Get api/employees/employeesbytown
         public List<string> GetEmployeesByTown()
         {
@@ -90,7 +93,7 @@ namespace EmployeeApi.Controllers
         }
 
         [Route("api/employees/ages")]
-        //[HttpGet]
+        [HttpGet]
         //Get api/employees/averageagebydepartment
         public List<string> GetListAverageAge()
         {
@@ -102,7 +105,8 @@ namespace EmployeeApi.Controllers
                                             {
                                                 Department = e.Key,
                                                 TotalAge = e.Sum(x => x.Age),
-                                                EmployeesInDepartment = e.Count()
+                                                EmployeesInDepartment = e.Count(),
+                                                AverageAge = e.Sum(x => x.Age)/ e.Count()
                                             });
 
             foreach (var employee in AgeByDepartment)
@@ -111,5 +115,28 @@ namespace EmployeeApi.Controllers
             }
             return departmentAges;
         }
+
+        [Route("api/employees/anniversaries")]
+        [HttpGet]
+        public List<string> GetUpcomingAnniversaries()
+        {
+            List<string> anniversaries = new List<string>();
+
+            var UpcomingAnniversaries = employees.Where(e => e.Anniversary == true)
+                                                 .Select(e => new
+                                                 {
+                                                     Name = e.FirstName + e.LastName,
+                                                     DaysTillAnniversary = e.DaysTillAnniversary,
+                                                    StartDate = e.StartDate.ToShortDateString()
+                                                 });
+
+            foreach (var employee in UpcomingAnniversaries)
+            {
+                anniversaries.Add(employee.ToString());
+            }
+
+            return anniversaries;
+        }
+
     }
 }
