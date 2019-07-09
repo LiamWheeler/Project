@@ -41,7 +41,7 @@ namespace EmployeeApi.Controllers
         // POST api/values
         public List<Employee> PutNewEmployee([FromBody]Employee employee)
         {
-            employees.Add(employee);
+                employees.Add(employee);
             var row = $"{Environment.NewLine}{employee.EmployeeId},{employee.FirstName}," +
             $"{employee.LastName},{employee.DateOfBirth.ToString("yyyy-MM-dd")},{employee.StartDate.ToString("yyyy-MM-yy")},{employee.HomeTown},{employee.Department}";
             File.AppendAllText(DBPath, row);

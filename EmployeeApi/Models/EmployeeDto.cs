@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using KaleidaProject;
+using System.Configuration;
 
 namespace EmployeeApi.Models
 {
     public class EmployeeDto
     {
-
         public class Employee
         {
             public int EmployeeId { get; set; }
