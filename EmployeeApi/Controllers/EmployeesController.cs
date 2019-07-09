@@ -17,8 +17,9 @@ namespace EmployeeApi.Controllers
     public class EmployeesController : ApiController
     {
         private static EmployeeDataStore _dataStore = new EmployeeDataStore();
-        List<Employee> employeeList = new List<Employee>();
         private static readonly string DBPath = ConfigurationManager.AppSettings["CsvDatabasePath"];
+
+        List<Employee> employees = _dataStore.ProcessData(DBPath);
 
         [Route("api/employees")]
         // GET api/employees
@@ -80,21 +81,32 @@ namespace EmployeeApi.Controllers
             return departmentAges;
         }
 
-
+        [Route("api/employees/{id}")]
+        [HttpPost]
         // POST api/values
-        //public IEnumerable Post( [FromBody]string value)
-        //{
-        //    return value;
-        //}
+        public List<Employee> PostNewEmployee([FromBody]Employee employee)
+        {
+            employees.Add(employee);
+            return employees;
+        }
 
         //// PUT api/values/5
         //public void Put(int id, [FromBody]string value)
         //{
         //}
 
+
+        [Route("api/employees/{id}")]
+        [HttpDelete]
         // DELETE api/values/5
-        //public IEnumerable<Employee> DeleteEmployee(int id)
-        //{
-        //}
+        public List<Employee> DeleteEmployee(int id)
+        {
+            var EmployeeToDelete = employees.FirstOrDefault(e => e.EmployeeId == id);
+
+            employees.Remove(EmployeeToDelete);
+
+            return employees;
+            
+        }
     }
 }
