@@ -42,6 +42,9 @@ namespace EmployeeApi.Controllers
         public List<Employee> PutNewEmployee([FromBody]Employee employee)
         {
             employees.Add(employee);
+            var row = $"{Environment.NewLine}{employee.EmployeeId},{employee.FirstName}," +
+            $"{employee.LastName},{employee.DateOfBirth.ToShortDateString()},{employee.StartDate.ToShortDateString()},{employee.HomeTown},{employee.Department}";
+            File.AppendAllText(DBPath, row);
             return employees;
         }
 
@@ -61,9 +64,9 @@ namespace EmployeeApi.Controllers
         // DELETE api/values/5
         public List<Employee> DeleteEmployee(int id)
         {
-            var EmployeeToDelete = employees.FirstOrDefault(e => e.EmployeeId == id);
+            var employeeToDelete = employees.FirstOrDefault(e => e.EmployeeId == id);
 
-            employees.Remove(EmployeeToDelete);
+            employees.Remove(employeeToDelete);
 
             return employees;
             
