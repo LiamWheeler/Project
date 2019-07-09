@@ -25,7 +25,7 @@ namespace EmployeeApi.Controllers
         // GET api/employees
         public List<Employee> GetEmployees()
         {
-            return employees;           
+            return employees;  
         }
 
        [Route("api/employees/{id}")]
@@ -125,7 +125,7 @@ namespace EmployeeApi.Controllers
             var UpcomingAnniversaries = employees.Where(e => e.Anniversary == true)
                                                  .Select(e => new
                                                  {
-                                                     Name = e.FirstName + e.LastName,
+                                                     Name = e.FirstName + " " + e.LastName,
                                                      DaysTillAnniversary = e.DaysTillAnniversary,
                                                     StartDate = e.StartDate.ToShortDateString()
                                                  });
