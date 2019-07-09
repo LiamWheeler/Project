@@ -23,9 +23,9 @@ namespace EmployeeApi.Controllers
         [Route("api/employees")]
         [HttpGet]
         // GET api/employees
-        public List<Employee> GetEmployees()
+        public IEnumerable<Employee> GetEmployees()
         {
-            return employees;  
+            return employees.OrderBy(e => e.EmployeeId);  
         }
 
        [Route("api/employees/{id}")]
