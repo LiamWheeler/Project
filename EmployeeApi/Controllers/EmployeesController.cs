@@ -25,14 +25,14 @@ namespace EmployeeApi.Controllers
         // GET api/employees
         public List<Employee> GetEmployees()
         {
-            return _dataStore.ProcessData(DBPath);           
+            return employees;           
         }
 
        [Route("api/employees/{id}")]
         // GET api/employees/id
         public IEnumerable<Employee> GetEmployee(int id)
         {
-            return _dataStore.ProcessData(DBPath).Where(e => e.EmployeeId == id);
+            return employees.Where(e => e.EmployeeId == id);
         }
 
         [Route("api/employees/towns")]
@@ -40,8 +40,7 @@ namespace EmployeeApi.Controllers
         public List<string> GetEmployeesByTown()
         {
             List<string> employeesByTown = new List<string>();
-            var Employees = _dataStore.ProcessData(DBPath);
-            var homeTownList = Employees.GroupBy(e => e.HomeTown)
+            var homeTownList = employees.GroupBy(e => e.HomeTown)
                                .OrderBy(e => e.Key)
                                .Select(e => new
                                {
@@ -63,9 +62,8 @@ namespace EmployeeApi.Controllers
         public List<string> GetListAverageAge()
         {
             List<string> departmentAges = new List<string>();
-            var Employees = _dataStore.ProcessData(DBPath);
 
-            var AgeByDepartment = Employees.GroupBy(e => e.Department)
+            var AgeByDepartment = employees.GroupBy(e => e.Department)
                                             .OrderBy(e => e.Key)
                                             .Select(e => new
                                             {
