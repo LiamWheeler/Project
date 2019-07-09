@@ -53,7 +53,6 @@ namespace EmployeeApi.Controllers
             var EmployeeToEdit = employees.FirstOrDefault(e => e.EmployeeId == id);
 
             EmployeeToEdit.DateOfBirth = newDOB;
-
             return employees;
         }
 
