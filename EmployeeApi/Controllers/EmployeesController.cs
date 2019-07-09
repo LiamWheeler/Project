@@ -18,7 +18,6 @@ namespace EmployeeApi.Controllers
     {
         private static EmployeeDataStore _dataStore = new EmployeeDataStore();
         private static readonly string DBPath = ConfigurationManager.AppSettings["CsvDatabasePath"];
-
         List<Employee> employees = _dataStore.ProcessData(DBPath);
 
         [Route("api/employees")]
@@ -33,6 +32,40 @@ namespace EmployeeApi.Controllers
         public IEnumerable<Employee> GetEmployee(int id)
         {
             return employees.Where(e => e.EmployeeId == id);
+        }
+
+        [Route("api/employees")]
+        [HttpPut]
+        // POST api/values
+        public List<Employee> PutNewEmployee([FromBody]Employee employee)
+        {
+            employees.Add(employee);
+            return employees;
+        }
+
+        [Route("api/employees/{id}")]
+        [HttpPut]
+        // PUT api/values/5
+        public List<Employee> PutEditedEmployee(int id, [FromBody]DateTime newDOB)
+        {
+            var EmployeeToEdit = employees.FirstOrDefault(e => e.EmployeeId == id);
+
+            EmployeeToEdit.DateOfBirth = newDOB;
+
+            return employees;
+        }
+
+        [Route("api/employees/{id}")]
+        [HttpDelete]
+        // DELETE api/values/5
+        public List<Employee> DeleteEmployee(int id)
+        {
+            var EmployeeToDelete = employees.FirstOrDefault(e => e.EmployeeId == id);
+
+            employees.Remove(EmployeeToDelete);
+
+            return employees;
+            
         }
 
         [Route("api/employees/towns")]
@@ -77,41 +110,6 @@ namespace EmployeeApi.Controllers
                 departmentAges.Add(employee.ToString());
             }
             return departmentAges;
-        }
-
-        [Route("api/employees")]
-        [HttpPut]
-        // POST api/values
-        public List<Employee> PutNewEmployee([FromBody]Employee employee)
-        {
-            employees.Add(employee);
-            return employees;
-        }
-
-        [Route("api/employees/{id}")]
-        [HttpPut]
-        // PUT api/values/5
-        public List<Employee> PutEditedEmployee(int id, [FromBody]DateTime newDOB)
-        {
-            var EmployeeToEdit = employees.FirstOrDefault(e => e.EmployeeId == id);
-
-            EmployeeToEdit.DateOfBirth = newDOB;
-
-            return employees;
-        }
-
-
-        [Route("api/employees/{id}")]
-        [HttpDelete]
-        // DELETE api/values/5
-        public List<Employee> DeleteEmployee(int id)
-        {
-            var EmployeeToDelete = employees.FirstOrDefault(e => e.EmployeeId == id);
-
-            employees.Remove(EmployeeToDelete);
-
-            return employees;
-            
         }
     }
 }
