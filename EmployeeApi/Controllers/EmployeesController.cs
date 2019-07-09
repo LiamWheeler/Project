@@ -81,19 +81,26 @@ namespace EmployeeApi.Controllers
             return departmentAges;
         }
 
-        [Route("api/employees/{id}")]
-        [HttpPost]
+        [Route("api/employees")]
+        [HttpPut]
         // POST api/values
-        public List<Employee> PostNewEmployee([FromBody]Employee employee)
+        public List<Employee> PutNewEmployee([FromBody]Employee employee)
         {
             employees.Add(employee);
             return employees;
         }
 
-        //// PUT api/values/5
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
+        [Route("api/employees/{id}")]
+        [HttpPut]
+        // PUT api/values/5
+        public List<Employee> PutEditedEmployee(int id, [FromBody]DateTime newDOB)
+        {
+            var EmployeeToEdit = employees.FirstOrDefault(e => e.EmployeeId == id);
+
+            EmployeeToEdit.DateOfBirth = newDOB;
+
+            return employees;
+        }
 
 
         [Route("api/employees/{id}")]
