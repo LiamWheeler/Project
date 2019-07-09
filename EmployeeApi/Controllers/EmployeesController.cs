@@ -66,8 +66,14 @@ namespace EmployeeApi.Controllers
         {
             var employeeToDelete = employees.FirstOrDefault(e => e.EmployeeId == id);
 
-            employees.Remove(employeeToDelete);
 
+            var rowToDelete = $"{Environment.NewLine}{employeeToDelete.EmployeeId},{employeeToDelete.FirstName}," +
+                    $"{employeeToDelete.LastName},{employeeToDelete.DateOfBirth.ToShortDateString()}," +
+                    $"{employeeToDelete.StartDate.ToShortDateString()},{employeeToDelete.HomeTown},{employeeToDelete.Department}";
+            var file = File.ReadAllText(DBPath);
+            file = file.Replace(rowToDelete, "");
+            File.WriteAllText(DBPath, file);
+            employees.Remove(employeeToDelete);
             return employees;
             
         }
