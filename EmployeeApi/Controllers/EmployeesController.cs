@@ -43,7 +43,7 @@ namespace EmployeeApi.Controllers
         {
             employees.Add(employee);
             var row = $"{Environment.NewLine}{employee.EmployeeId},{employee.FirstName}," +
-            $"{employee.LastName},{employee.DateOfBirth.ToShortDateString()},{employee.StartDate.ToShortDateString()},{employee.HomeTown},{employee.Department}";
+            $"{employee.LastName},{employee.DateOfBirth.ToString("yyyy-MM-dd")},{employee.StartDate.ToString("yyyy-MM-yy")},{employee.HomeTown},{employee.Department}";
             File.AppendAllText(DBPath, row);
             return employees;
         }
@@ -55,7 +55,14 @@ namespace EmployeeApi.Controllers
         {
             var EmployeeToEdit = employees.FirstOrDefault(e => e.EmployeeId == id);
 
-            EmployeeToEdit.DateOfBirth = newDOB;
+
+            var NewDOB = newDOB.ToString("yyyy-MM-dd");
+
+            var OldDOB = EmployeeToEdit.DateOfBirth.ToString("yyyy-MM-dd");
+            var file = File.ReadAllText(DBPath);
+            file = file.Replace(OldDOB, NewDOB);
+            File.WriteAllText(DBPath, file);
+
             return employees;
         }
 
@@ -66,14 +73,15 @@ namespace EmployeeApi.Controllers
         {
             var employeeToDelete = employees.FirstOrDefault(e => e.EmployeeId == id);
 
-
             var rowToDelete = $"{Environment.NewLine}{employeeToDelete.EmployeeId},{employeeToDelete.FirstName}," +
-                    $"{employeeToDelete.LastName},{employeeToDelete.DateOfBirth.ToShortDateString()}," +
-                    $"{employeeToDelete.StartDate.ToShortDateString()},{employeeToDelete.HomeTown},{employeeToDelete.Department}";
+                    $"{employeeToDelete.LastName},{employeeToDelete.DateOfBirth.ToString("yyyy-MM-dd")}," +
+                    $"{employeeToDelete.StartDate.ToString("yyyy-MM-dd")},{employeeToDelete.HomeTown},{employeeToDelete.Department}";
             var file = File.ReadAllText(DBPath);
             file = file.Replace(rowToDelete, "");
             File.WriteAllText(DBPath, file);
+
             employees.Remove(employeeToDelete);
+
             return employees;
             
         }
