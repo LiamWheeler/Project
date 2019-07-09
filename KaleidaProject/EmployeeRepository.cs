@@ -35,14 +35,14 @@ namespace KaleidaProject
         public void AddEmployee(Employee employee)
         {
             var row = $"{Environment.NewLine}{employee.EmployeeId},{employee.FirstName}," +
-                        $"{employee.LastName},{employee.DateOfBirth.ToShortDateString()},{employee.StartDate.ToShortDateString()},{employee.HomeTown},{employee.Department}";
+                        $"{employee.LastName},{employee.DateOfBirth.ToString("yyyy-MM-dd")},{employee.StartDate.ToString("yyyy-MM-dd")},{employee.HomeTown},{employee.Department}";
             File.AppendAllText(DBPath, row);
         }
 
         public void RemoveEmployeeFromData(Employee employee)
         {
             var rowToDelete = $"{Environment.NewLine}{employee.EmployeeId},{employee.FirstName}," +
-                                $"{employee.LastName},{employee.DateOfBirth.ToShortDateString()},{employee.StartDate.ToShortDateString()},{employee.HomeTown},{employee.Department}";
+                                $"{employee.LastName},{employee.DateOfBirth.ToString("yyyy-MM-dd")},{employee.StartDate.ToString("yyyy-MM-dd")},{employee.HomeTown},{employee.Department}";
             var file = File.ReadAllText(DBPath);
             file = file.Replace(rowToDelete, "");
             File.WriteAllText(DBPath, file);
@@ -56,12 +56,12 @@ namespace KaleidaProject
 
         public void UpdateEmployee(Employee employee)
         {
-            var dateofBirthInput = GetUserInput("Enter date of birth. (DD/MM/YYYY)");
+            var dateofBirthInput = GetUserInput("Enter date of birth. (YYYY-MM-dd)");
             DateTime.TryParse(dateofBirthInput, out DateTime dateofBirth);
 
-            var NewDOB = $"{dateofBirth.ToShortDateString()}";
+            var NewDOB = $"{dateofBirth.ToString("yyyy-MM-dd")}";
 
-            var OldDOB = $"{employee.DateOfBirth.ToShortDateString()}";
+            var OldDOB = $"{employee.DateOfBirth.ToString("yyyy-MM-dd")}";
             var file = File.ReadAllText(DBPath);
             file = file.Replace(OldDOB, NewDOB);
 

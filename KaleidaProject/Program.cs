@@ -110,8 +110,8 @@ namespace KaleidaProject
             {
                 Console.WriteLine($"\r\nId: {employee.EmployeeId}" +
                     $"\r\nName: {employee.FirstName} {employee.LastName} " +
-                    $"\r\nDate of birth: {employee.DateOfBirth.ToShortDateString()}" +
-                    $"\r\nEmployment start date: {employee.StartDate.Date.ToShortDateString()}" +
+                    $"\r\nDate of birth: {employee.DateOfBirth.ToString("yyyy-MM-dd")}" +
+                    $"\r\nEmployment start date: {employee.StartDate.Date.ToString("yyyy-MM-dd")}" +
                     $"\r\nHome town: {employee.HomeTown}" +
                     $"\r\nDepartment: {employee.Department}");
             }
@@ -126,9 +126,9 @@ namespace KaleidaProject
                 Int32.TryParse(employeeIdInput, out int employeeId);
                 var firstName = GetUserInput("Enter First Name");
                 var lastName = GetUserInput("Enter Last Name");
-                var dateofBirthInput = GetUserInput("Enter date of birth. (DD/MM/YYYY)");
+                var dateofBirthInput = GetUserInput("Enter date of birth. (YYYY-MM-DD)");
                 DateTime.TryParse(dateofBirthInput, out DateTime dateofBirth);
-                var startDateInput = GetUserInput("Enter start date. (DD/MM/YYYY)");
+                var startDateInput = GetUserInput("Enter start date. (YYYY-MM-DD)");
                 DateTime.TryParse(startDateInput, out DateTime startDate);
                 var homeTown = GetUserInput("Enter home town");
                 var department = GetUserInput("Enter department"); 
