@@ -31,9 +31,15 @@ namespace EmployeeApi.Controllers
        [Route("api/employees/{id}")]
        [HttpGet]
         // GET api/employees/id
-        public IEnumerable<Employee> GetEmployee(int id)
+        public IHttpActionResult GetEmployee(int id)
         {
-            return employees.Where(e => e.EmployeeId == id);
+            var employeeToReturn = employees.Where(e => e.EmployeeId == id);
+            if (employeeToReturn != null)
+            {
+                return Ok(employeeToReturn);
+            }
+            else return NotFound();
+
         }
 
         [Route("api/employees")]

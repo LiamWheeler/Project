@@ -29,6 +29,7 @@ namespace EmployeeApi.Models
                     return age;
                 }
             }
+
             public bool Anniversary
             {
                 get
