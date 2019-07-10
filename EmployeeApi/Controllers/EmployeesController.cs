@@ -55,6 +55,9 @@ namespace EmployeeApi.Controllers
             {
                 return BadRequest(ModelState);
             }
+
+           
+
                 employees.Add(employee);
             var row = $"{Environment.NewLine}{employee.EmployeeId},{employee.FirstName}," +
             $"{employee.LastName},{employee.DateOfBirth.ToString("yyyy-MM-dd")},{employee.StartDate.ToString("yyyy-MM-yy")},{employee.HomeTown},{employee.Department}";
@@ -155,8 +158,6 @@ namespace EmployeeApi.Controllers
                                             .Select(e => new
                                             {
                                                 Department = e.Key,
-                                                TotalAge = e.Sum(x => x.Age),
-                                                EmployeesInDepartment = e.Count(),
                                                 AverageAge = e.Sum(x => x.Age)/ e.Count()
                                             });
 
