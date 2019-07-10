@@ -46,21 +46,34 @@ namespace EmployeeApi.Controllers
         // POST api/values
         public IHttpActionResult PutNewEmployee([FromBody]Employee employee)
         {
-            if(employee == null || employee.EmployeeId == 0 || employee.FirstName == null || employee.LastName == null || employee.DateOfBirth == null ||
+            if(employee == null || employee.FirstName == null || employee.LastName == null || employee.DateOfBirth == null ||
                 employee.StartDate == null || employee.HomeTown == null || employee.Department == null)
             {
-                ModelState.AddModelError("Description","A new employee requires a Employee ID, First and Last name, date of birth, start date, home town and department");
+                ModelState.AddModelError("Description","A new employee requires a First and Last name, date of birth, start date, home town and department");
             }
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            var maxEmployeeId = employees.Max(e => e.EmployeeId);
+            var finalNewEmployee = new Employee()
+            {
+                EmployeeId = ++maxEmployeeId,
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                DateOfBirth = employee.DateOfBirth,
+                StartDate = employee.StartDate,
+                HomeTown = employee.HomeTown,
+                Department = employee.Department
+            };
+
            
 
-                employees.Add(employee);
-            var row = $"{Environment.NewLine}{employee.EmployeeId},{employee.FirstName}," +
-            $"{employee.LastName},{employee.DateOfBirth.ToString("yyyy-MM-dd")},{employee.StartDate.ToString("yyyy-MM-yy")},{employee.HomeTown},{employee.Department}";
+                employees.Add(finalNewEmployee);
+            var row = $"{Environment.NewLine}{finalNewEmployee.EmployeeId},{finalNewEmployee.FirstName}," +
+            $"{finalNewEmployee.LastName},{finalNewEmployee.DateOfBirth.ToString("yyyy-MM-dd")},{finalNewEmployee.StartDate.ToString("yyyy-MM-yy")}," +
+            $"{finalNewEmployee.HomeTown},{finalNewEmployee.Department}";
             File.AppendAllText(DBPath, row);
             return Ok(employees.OrderBy(e => e.EmployeeId));
         }
