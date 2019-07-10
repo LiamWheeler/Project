@@ -1,5 +1,4 @@
 employeeId, firstName, lastName, D.O.B, StartDate, HomeTown, Department
-1,David,Banks,2001-04-03,2015-07-15,Manchester,Sales
 2,Sabrina,Mulholland,2000-05-06,2015-12-19,Bradford,Marketing
 3,Rahim,Trevar,1998-02-10,2013-07-08,Wigan,Support
 4,Sara,Patel,1998-07-10,2013-12-05,Manchester,Research
@@ -16,3 +15,4 @@ employeeId, firstName, lastName, D.O.B, StartDate, HomeTown, Department
 15,Frances,Russo,1989-09-23,2016-02-12,Bradford, Support
 16,Liam,Wheeler,1994-02-19,2019-04-19,Salford,IT
 17,Warren,Pitterson,7/8/1989,4/16/2019,Salford,IT
+1,David,Banks,2001-04-03,2015-07-15,Manchester,Sales

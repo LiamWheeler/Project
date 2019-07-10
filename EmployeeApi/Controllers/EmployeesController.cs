@@ -44,13 +44,22 @@ namespace EmployeeApi.Controllers
         [Route("api/employees")]
         [HttpPut]
         // POST api/values
-        public IEnumerable<Employee> PutNewEmployee([FromBody]Employee employee)
+        public IHttpActionResult PutNewEmployee([FromBody]Employee employee)
         {
+            if(employee == null || employee.EmployeeId == 0 || employee.FirstName == null || employee.LastName == null || employee.DateOfBirth == null ||
+                employee.StartDate == null || employee.HomeTown == null || employee.Department == null)
+            {
+                ModelState.AddModelError("Description","A new employee requires a Employee ID, First and Last name, date of birth, start date, home town and department");
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
                 employees.Add(employee);
             var row = $"{Environment.NewLine}{employee.EmployeeId},{employee.FirstName}," +
             $"{employee.LastName},{employee.DateOfBirth.ToString("yyyy-MM-dd")},{employee.StartDate.ToString("yyyy-MM-yy")},{employee.HomeTown},{employee.Department}";
             File.AppendAllText(DBPath, row);
-            return employees.OrderBy(e => e.EmployeeId);
+            return Ok(employees.OrderBy(e => e.EmployeeId));
         }
 
         [Route("api/employees/{id}")]
