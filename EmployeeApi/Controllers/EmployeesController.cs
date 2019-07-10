@@ -39,25 +39,24 @@ namespace EmployeeApi.Controllers
                 return Ok(employeeToReturn);
             }
             else return NotFound();
-
         }
 
         [Route("api/employees")]
         [HttpPut]
         // POST api/values
-        public List<Employee> PutNewEmployee([FromBody]Employee employee)
+        public IEnumerable<Employee> PutNewEmployee([FromBody]Employee employee)
         {
                 employees.Add(employee);
             var row = $"{Environment.NewLine}{employee.EmployeeId},{employee.FirstName}," +
             $"{employee.LastName},{employee.DateOfBirth.ToString("yyyy-MM-dd")},{employee.StartDate.ToString("yyyy-MM-yy")},{employee.HomeTown},{employee.Department}";
             File.AppendAllText(DBPath, row);
-            return employees;
+            return employees.OrderBy(e => e.EmployeeId);
         }
 
         [Route("api/employees/{id}")]
         [HttpPut]
         // PUT api/values/5
-        public List<Employee> PutEditedEmployee(int id, [FromBody]DateTime newDOB)
+        public IEnumerable<Employee> PutEditedEmployee(int id, [FromBody]DateTime newDOB)
         {
             var EmployeeToEdit = employees.FirstOrDefault(e => e.EmployeeId == id);
 
@@ -69,13 +68,13 @@ namespace EmployeeApi.Controllers
             file = file.Replace(OldDOB, NewDOB);
             File.WriteAllText(DBPath, file);
 
-            return employees;
+            return employees.OrderBy(e => e.EmployeeId);
         }
 
         [Route("api/employees/{id}")]
         [HttpDelete]
         // DELETE api/values/5
-        public List<Employee> DeleteEmployee(int id)
+        public IEnumerable<Employee> DeleteEmployee(int id)
         {
             var employeeToDelete = employees.FirstOrDefault(e => e.EmployeeId == id);
 
@@ -88,7 +87,7 @@ namespace EmployeeApi.Controllers
 
             employees.Remove(employeeToDelete);
 
-            return employees;
+            return employees.OrderBy(e => e.EmployeeId);
             
         }
 
