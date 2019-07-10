@@ -96,9 +96,17 @@ namespace EmployeeApi.Controllers
         [Route("api/employees/{id}")]
         [HttpDelete]
         // DELETE api/values/5
-        public IEnumerable<Employee> DeleteEmployee(int id)
+        public IHttpActionResult DeleteEmployee(int id)
         {
             var employeeToDelete = employees.FirstOrDefault(e => e.EmployeeId == id);
+            if(employeeToDelete == null)
+            {
+                ModelState.AddModelError("Description", $"Employee with id: {id}, could not be found ");
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
             var rowToDelete = $"{Environment.NewLine}{employeeToDelete.EmployeeId},{employeeToDelete.FirstName}," +
                     $"{employeeToDelete.LastName},{employeeToDelete.DateOfBirth.ToString("yyyy-MM-dd")}," +
@@ -109,7 +117,7 @@ namespace EmployeeApi.Controllers
 
             employees.Remove(employeeToDelete);
 
-            return employees.OrderBy(e => e.EmployeeId);
+            return Ok(employees.OrderBy(e => e.EmployeeId));
             
         }
 
