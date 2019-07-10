@@ -65,10 +65,18 @@ namespace EmployeeApi.Controllers
         [Route("api/employees/{id}")]
         [HttpPut]
         // PUT api/values/5
-        public IEnumerable<Employee> PutEditedEmployee(int id, [FromBody]DateTime newDOB)
+        public IHttpActionResult PutEditedEmployee(int id, [FromBody]DateTime newDOB)
         {
-            var EmployeeToEdit = employees.FirstOrDefault(e => e.EmployeeId == id);
+            if(newDOB == null || newDOB >= DateTime.Today)
+            {
+                ModelState.AddModelError("Description", "entered date of birth is  invalid");
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            var EmployeeToEdit = employees.FirstOrDefault(e => e.EmployeeId == id);
 
             var NewDOB = newDOB.ToString("yyyy-MM-dd");
 
@@ -77,7 +85,7 @@ namespace EmployeeApi.Controllers
             file = file.Replace(OldDOB, NewDOB);
             File.WriteAllText(DBPath, file);
 
-            return employees.OrderBy(e => e.EmployeeId);
+            return Ok(employees.OrderBy(e => e.EmployeeId));
         }
 
         [Route("api/employees/{id}")]
