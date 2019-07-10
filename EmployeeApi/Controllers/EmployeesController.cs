@@ -33,12 +33,12 @@ namespace EmployeeApi.Controllers
         // GET api/employees/id
         public IHttpActionResult GetEmployee(int id)
         {
-            var employeeToReturn = employees.Where(e => e.EmployeeId == id);
-            if (employeeToReturn != null)
+            var employeeToReturn = employees.FirstOrDefault(e => e.EmployeeId == id);
+            if (employeeToReturn == null)
             {
-                return Ok(employeeToReturn);
+                return NotFound();
             }
-            else return NotFound();
+            else return Ok(employeeToReturn);
         }
 
         [Route("api/employees")]
@@ -77,6 +77,11 @@ namespace EmployeeApi.Controllers
             }
 
             var EmployeeToEdit = employees.FirstOrDefault(e => e.EmployeeId == id);
+
+            if(EmployeeToEdit == null)
+            {
+                return NotFound();
+            }
 
             var NewDOB = newDOB.ToString("yyyy-MM-dd");
 
